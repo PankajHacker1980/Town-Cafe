@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Operations & Analytics — Town Cafe</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div style="display: flex; min-height: 100vh;">
+    <!-- Left Navigation Sidebar -->
+    <aside style="width: 260px; background: var(--bg-surface); border-right: 1px solid var(--border-light); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 32px;">
+          <div style="background: var(--brand-brown); color: white; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800;">TC</div>
+          <h3 style="font-size: 16px;">Town Cafe POS</h3>
+        </div>
+
+        <nav style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="#" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; background: var(--brand-brown); color: white; font-weight: 600; font-size: 13px;">Dashboard Overview</a>
+          <a href="customer.html" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Customer Menu Portal</a>
+          <a href="staff.html" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Kitchen Display Screen</a>
+        </nav>
+      </div>
+
+      <div style="font-size: 11px; color: var(--text-muted);">
+        Town Cafe v2.4 Enterprise<br>Jaipur C Scheme Branch
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main style="flex-grow: 1; padding: 32px;">
+      <h2>Dashboard Performance Summary</h2>
+      
+      <!-- Top Analytics Metric Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px;">
+        <div class="glass-card" style="padding: 20px;">
+          <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Total Revenue Today</span>
+          <h3 style="font-size: 24px; margin-top: 4px;" id="admin-rev-sum">₹0.00</h3>
+        </div>
+        <div class="glass-card" style="padding: 20px;">
+          <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Total Completed Orders</span>
+          <h3 style="font-size: 24px; margin-top: 4px;" id="admin-orders-count">0</h3>
+        </div>
+        <div class="glass-card" style="padding: 20px;">
+          <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Active QR Tables</span>
+          <h3 style="font-size: 24px; margin-top: 4px;">18 Tables</h3>
+        </div>
+      </div>
+
+      <!-- Quick QR Code Generator Component -->
+      <section class="glass-card" style="padding: 24px; margin-top: 24px;">
+        <h3>QR Table Code Generator</h3>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Generate direct dynamic ordering links for tables</p>
+        <div style="display: flex; gap: 12px; max-width: 400px;">
+          <input type="number" id="qr-table-input" value="1" placeholder="Enter Table No" style="padding: 10px; border-radius: 12px; border: 1px solid var(--border-light); width: 120px;">
+          <button onclick="generateQRLink()" class="btn-primary" style="border-radius: 12px; padding: 10px 20px;">Generate URL</button>
+        </div>
+        <div id="qr-output" style="margin-top: 12px; font-weight: 700; font-size: 13px; color: var(--brand-brown);"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/script.js"></script>
+  <script>
+    function renderAdminStats() {
+      const orders = TownCafe.getOrders();
+      const rev = orders.reduce((acc, o) => acc + o.total, 0);
+      document.getElementById('admin-rev-sum').textContent = `₹${rev.toFixed(2)}`;
+      document.getElementById('admin-orders-count').textContent = orders.length;
+    }
+
+    function generateQRLink() {
+      const table = document.getElementById('qr-table-input').value;
+      const url = `${window.location.origin}/pages/customer.html?table=${table}`;
+      document.getElementById('qr-output').innerHTML = `Generated Table ${table} Link: <a href="${url}" target="_blank">${url}</a>`;
+    }
+
+    renderAdminStats();
+  </script>
+</body>
+</html>

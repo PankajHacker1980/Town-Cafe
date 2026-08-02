@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Staff Dashboard — Town Coffee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #FAF7F2;
+      color: #1C1917;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      padding-bottom: 90px;
+    }
+    .btn-active:active {
+      transform: scale(0.95);
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-pending { background: rgba(245, 158, 11, 0.15); color: #D97706; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-preparing { background: rgba(59, 130, 246, 0.15); color: #2563EB; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge-completed { background: rgba(34, 197, 94, 0.15); color: #16A34A; border: 1px solid rgba(34, 197, 94, 0.3); }
+
+    .filter-btn {
+      background: #FFFFFF;
+      border: 1px solid rgba(60, 42, 33, 0.08);
+      color: #78716C;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .filter-btn.active {
+      background: #3C2A21;
+      color: #FFFFFF;
+      border-color: #3C2A21;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header (Matched with Customer/Cart Screens) -->
+  <header style="padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; background: #FAF7F2; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(60, 42, 33, 0.05);">
+    <a href="customer.html" class="btn-active" style="text-decoration: none; color: #1C1917; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #FFFFFF; border-radius: 50%; border: 1px solid rgba(60, 42, 33, 0.08);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+    </a>
+    <h1 style="font-size: 18px; font-weight: 800; color: #1C1917; margin: 0;">Kitchen Dashboard</h1>
+    <button onclick="renderOrders()" class="btn-active" style="background: none; border: none; font-size: 12px; font-weight: 700; color: #3C2A21; cursor: pointer;">Refresh</button>
+  </header>
+
+  <main style="padding: 16px; max-width: 1200px; margin: 0 auto;">
+
+    <!-- Category / Filter Tabs -->
+    <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 4px;">
+      <button class="filter-btn active" onclick="setFilter('all', this)">All Orders (<span id="count-all">0</span>)</button>
+      <button class="filter-btn" onclick="setFilter('Pending', this)">Pending (<span id="count-pending">0</span>)</button>
+      <button class="filter-btn" onclick="setFilter('Preparing', this)">Preparing (<span id="count-preparing">0</span>)</button>
+      <button class="filter-btn" onclick="setFilter('Completed', this)">Completed (<span id="count-completed">0</span>)</button>
+    </div>
+
+    <!-- Orders Grid -->
+    <div id="orders-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;"></div>
+
+    <!-- Empty State -->
+    <div id="empty-orders-view" style="display: none; text-align: center; padding: 60px 20px;">
+      <div style="font-size: 48px; margin-bottom: 12px;">👨‍🍳</div>
+      <h3 style="font-size: 18px; font-weight: 800; color: #1C1917; margin: 0;">No Active Orders</h3>
+      <p style="font-size: 13px; color: #78716C; margin-top: 6px;">New orders placed by customers will automatically show up here.</p>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    let currentFilter = 'all';
+
+    function getStoredOrders() {
+      const stored = localStorage.getItem('town_cafe_staff_orders');
+      if (stored) {
+        try { return JSON.parse(stored); } catch (e) { return []; }
+      }
+      
+      const defaultOrders = [
+        {
+          id: "TC-8492",
+          table: "Table 12",
+          time: "2 mins ago",
+          status: "Preparing",
+          items: [
+            { name: "Cappuccino", qty: 2, price: 180 },
+            { name: "Chocolate Croissant", qty: 1, price: 140 }
+          ],
+          total: 500
+        },
+        {
+          id: "TC-8493",
+          table: "Table 04",
+          time: "Just now",
+          status: "Pending",
+          items: [
+            { name: "Iced Caramel Latte", qty: 1, price: 210 },
+            { name: "Avocado Toast", qty: 1, price: 260 }
+          ],
+          total: 470
+        }
+      ];
+      localStorage.setItem('town_cafe_staff_orders', JSON.stringify(defaultOrders));
+      return defaultOrders;
+    }
+
+    function saveOrders(orders) {
+      localStorage.setItem('town_cafe_staff_orders', JSON.stringify(orders));
+      renderOrders();
+    }
+
+    function updateOrderStatus(orderId, newStatus) {
+      const orders = getStoredOrders();
+      const target = orders.find(o => o.id === orderId);
+      if (target) {
+        target.status = newStatus;
+        saveOrders(orders);
+      }
+    }
+
+    function setFilter(status, btn) {
+      currentFilter = status;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderOrders();
+    }
+
+    function renderOrders() {
+      const orders = getStoredOrders();
+      const grid = document.getElementById('orders-grid');
+      const emptyView = document.getElementById('empty-orders-view');
+
+      document.getElementById('count-all').innerText = orders.length;
+      document.getElementById('count-pending').innerText = orders.filter(o => o.status === 'Pending').length;
+      document.getElementById('count-preparing').innerText = orders.filter(o => o.status === 'Preparing').length;
+      document.getElementById('count-completed').innerText = orders.filter(o => o.status === 'Completed').length;
+
+      const filtered = orders.filter(o => currentFilter === 'all' || o.status === currentFilter);
+
+      if (filtered.length === 0) {
+        grid.style.display = 'none';
+        emptyView.style.display = 'block';
+        return;
+      }
+
+      emptyView.style.display = 'none';
+      grid.style.display = 'grid';
+
+      grid.innerHTML = filtered.map(order => {
+        const badgeClass = order.status === 'Pending' ? 'badge-pending' : 
+                          order.status === 'Preparing' ? 'badge-preparing' : 'badge-completed';
+
+        return `
+          <div style="background: #FFFFFF; border-radius: 20px; padding: 18px; border: 1px solid rgba(60, 42, 33, 0.06); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <!-- Order Header -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(60, 42, 33, 0.06);">
+                <div>
+                  <span style="font-size: 16px; font-weight: 800; color: #1C1917;">${order.table}</span>
+                  <span style="font-size: 11px; color: #78716C; display: block;">#${order.id} • ${order.time}</span>
+                </div>
+                <span class="badge ${badgeClass}">${order.status}</span>
+              </div>
+
+              <!-- Items List -->
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                ${order.items.map(item => `
+                  <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                    <span style="color: #1C1917; font-weight: 600;"><strong style="color: #3C2A21;">${item.qty}x</strong> ${item.name}</span>
+                    <span style="color: #78716C;">₹${item.price * item.qty}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Footer & Actions -->
+            <div style="border-top: 1px solid rgba(60, 42, 33, 0.06); padding-top: 12px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; color: #1C1917; margin-bottom: 12px;">
+                <span>Total Amount</span>
+                <span style="color: #3C2A21;">₹${order.total}</span>
+              </div>
+
+              <div style="display: flex; gap: 8px;">
+                ${order.status === 'Pending' ? `
+                  <button onclick="updateOrderStatus('${order.id}', 'Preparing')" class="btn-active" style="flex: 1; background: #3C2A21; color: white; border: none; padding: 12px; border-radius: 14px; font-size: 12px; font-weight: 700; cursor: pointer;">Start Preparing 🍳</button>
+                ` : ''}
+
+                ${order.status === 'Preparing' ? `
+                  <button onclick="updateOrderStatus('${order.id}', 'Completed')" class="btn-active" style="flex: 1; background: #16A34A; color: white; border: none; padding: 12px; border-radius: 14px; font-size: 12px; font-weight: 700; cursor: pointer;">Mark Ready 🛎️</button>
+                ` : ''}
+
+                ${order.status === 'Completed' ? `
+                  <div style="width: 100%; text-align: center; color: #16A34A; font-size: 12px; font-weight: 800; padding: 10px; background: rgba(34, 197, 94, 0.08); border-radius: 12px;">Order Completed ✅</div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.addEventListener('load', renderOrders);
+  </script>
+</body>
+</html>

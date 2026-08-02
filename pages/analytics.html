@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detailed Analytics — Town Cafe</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div style="display: flex; min-height: 100vh;">
+    <!-- Left Navigation Sidebar -->
+    <aside style="width: 260px; background: var(--bg-surface); border-right: 1px solid var(--border-light); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 32px;">
+          <div style="background: var(--brand-brown); color: white; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800;">TC</div>
+          <h3 style="font-size: 16px;">Town Cafe POS</h3>
+        </div>
+
+        <nav style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="admin.html" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Dashboard Overview</a>
+          <a href="analytics.html" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; background: var(--brand-brown); color: white; font-weight: 600; font-size: 13px;">Analytics & Sales</a>
+          <a href="settings.html" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Store Settings</a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Analytics Dashboard Content -->
+    <main style="flex-grow: 1; padding: 32px;">
+      <h2>Sales Analytics & Performance Reports</h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Real-time breakdown of top-selling items and revenue metrics.</p>
+
+      <!-- Revenue Chart & Highlights -->
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+        
+        <div class="glass-card" style="padding: 24px;">
+          <h3>Hourly Sales Distribution</h3>
+          <div style="display: flex; align-items: flex-end; gap: 16px; height: 180px; margin-top: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border-light);">
+            <div style="flex:1; background: var(--brand-brown); height: 40%; border-radius: 6px 6px 0 0;" title="10 AM"></div>
+            <div style="flex:1; background: var(--brand-brown); height: 65%; border-radius: 6px 6px 0 0;" title="12 PM"></div>
+            <div style="flex:1; background: var(--brand-brown); height: 90%; border-radius: 6px 6px 0 0;" title="2 PM"></div>
+            <div style="flex:1; background: var(--brand-brown); height: 50%; border-radius: 6px 6px 0 0;" title="4 PM"></div>
+            <div style="flex:1; background: var(--brand-gold); height: 100%; border-radius: 6px 6px 0 0;" title="6 PM"></div>
+            <div style="flex:1; background: var(--brand-brown); height: 80%; border-radius: 6px 6px 0 0;" title="8 PM"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+            <span>10:00</span><span>12:00</span><span>14:00</span><span>16:00</span><span>18:00 (Peak)</span><span>20:00</span>
+          </div>
+        </div>
+
+        <!-- Top Selling Items List -->
+        <div class="glass-card" style="padding: 24px;">
+          <h3>Top Bestsellers 🌟</h3>
+          <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 13px;">
+              <span>1. Cappuccino</span>
+              <span style="font-weight: 700;">48 orders</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px;">
+              <span>2. Chocolate Brownie</span>
+              <span style="font-weight: 700;">34 orders</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px;">
+              <span>3. Artisanal Veg Sandwich</span>
+              <span style="font-weight: 700;">29 orders</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px;">
+              <span>4. White Sauce Pasta</span>
+              <span style="font-weight: 700;">18 orders</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

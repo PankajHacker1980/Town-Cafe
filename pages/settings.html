@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cafe Settings — Town Cafe</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div style="display: flex; min-height: 100vh;">
+    <!-- Left Navigation Sidebar -->
+    <aside style="width: 260px; background: var(--bg-surface); border-right: 1px solid var(--border-light); padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 32px;">
+          <div style="background: var(--brand-brown); color: white; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800;">TC</div>
+          <h3 style="font-size: 16px;">Town Cafe POS</h3>
+        </div>
+
+        <nav style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="admin.html" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Dashboard Overview</a>
+          <a href="analytics.html" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Analytics & Sales</a>
+          <a href="settings.html" style="text-decoration: none; padding: 10px 14px; border-radius: 12px; background: var(--brand-brown); color: white; font-weight: 600; font-size: 13px;">Store Settings</a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Settings Content Area -->
+    <main style="flex-grow: 1; padding: 32px; max-width: 800px;">
+      <h2>Store Configuration & Settings</h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Manage operational parameters, tax rules, and store details.</p>
+
+      <form onsubmit="saveSettings(event)" style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- Store Identity -->
+        <div class="glass-card" style="padding: 20px;">
+          <h3 style="font-size: 16px; margin-bottom: 12px;">Cafe Profile</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 700; color: var(--text-muted);">CAFE NAME</label>
+              <input type="text" value="Town Cafe" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-light); margin-top: 4px;">
+            </div>
+            <div>
+              <label style="font-size: 12px; font-weight: 700; color: var(--text-muted);">LOCATION / BRANCH</label>
+              <input type="text" value="C Scheme, Jaipur" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-light); margin-top: 4px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Tax & Billing Config -->
+        <div class="glass-card" style="padding: 20px;">
+          <h3 style="font-size: 16px; margin-bottom: 12px;">Taxation & Currency</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+              <label style="font-size: 12px; font-weight: 700; color: var(--text-muted);">GST / TAX RATE (%)</label>
+              <input type="number" value="5" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-light); margin-top: 4px;">
+            </div>
+            <div>
+              <label style="font-size: 12px; font-weight: 700; color: var(--text-muted);">CURRENCY SYMBOL</label>
+              <input type="text" value="₹" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-light); margin-top: 4px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Options -->
+        <div class="glass-card" style="padding: 20px;">
+          <h3 style="font-size: 16px; margin-bottom: 12px;">Service Features</h3>
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;">
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+              <input type="checkbox" checked style="width: 18px; height: 18px;"> Enable Call Waiter Button
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+              <input type="checkbox" checked style="width: 18px; height: 18px;"> Enable Digital Bill Requests
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+              <input type="checkbox" checked style="width: 18px; height: 18px;"> Allow Special Instructions per item
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="align-self: flex-start; padding: 12px 28px;">
+          Save Changes
+        </button>
+
+      </form>
+    </main>
+  </div>
+
+  <script src="../js/script.js"></script>
+  <script>
+    function saveSettings(e) {
+      e.preventDefault();
+      TownCafe.showToast("Store settings saved successfully!");
+    }
+  </script>
+</body>
+</html>

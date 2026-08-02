@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Track Order — Town Coffee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #FAF7F2;
+      color: #1C1917;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding-bottom: 90px;
+      margin: 0;
+    }
+    .btn-active:active {
+      transform: scale(0.95);
+    }
+    /* Pulse effect for active status ring */
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(212, 163, 115, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0); }
+    }
+    .pulse-ring {
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header style="padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; background: #FAF7F2; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(60, 42, 33, 0.05);">
+    <a href="customer.html" class="btn-active" style="text-decoration: none; color: #1C1917; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: #FFFFFF; border-radius: 50%; border: 1px solid rgba(60, 42, 33, 0.08);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+    </a>
+    <h1 style="font-size: 18px; font-weight: 800; color: #1C1917; margin: 0;">Live Order Status</h1>
+    <div style="width: 36px;"></div> <!-- Spacer for balance -->
+  </header>
+
+  <main style="padding: 16px;">
+
+    <!-- Order Hero Card -->
+    <section style="background: linear-gradient(135deg, #2D1E18 0%, #17110E 100%); border-radius: 24px; padding: 24px; color: white; margin-bottom: 20px; box-shadow: 0 12px 28px rgba(45, 30, 24, 0.15);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <span style="font-size: 11px; font-weight: 700; color: #D4A373; text-transform: uppercase; letter-spacing: 0.5px;">Table 12</span>
+          <h2 style="font-size: 22px; font-weight: 800; margin: 2px 0 0 0; color: #FFFFFF;">Order #TC-8492</h2>
+        </div>
+        <span style="background: rgba(212, 163, 115, 0.2); color: #D4A373; border: 1px solid rgba(212, 163, 115, 0.3); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px;">Preparing 🍳</span>
+      </div>
+
+      <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px;">
+        <div class="pulse-ring" style="width: 44px; height: 44px; border-radius: 50%; background: #D4A373; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <div>
+          <p style="font-size: 11px; color: rgba(255, 255, 255, 0.7); margin: 0;">Estimated Preparation Time</p>
+          <h3 style="font-size: 18px; font-weight: 800; color: #FFFFFF; margin: 2px 0 0 0;">12-15 Minutes</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline Progress -->
+    <section style="background: #FFFFFF; border-radius: 20px; padding: 20px; border: 1px solid rgba(60, 42, 33, 0.06); margin-bottom: 20px;">
+      <h3 style="font-size: 15px; font-weight: 800; color: #1C1917; margin: 0 0 18px 0;">Order Progress</h3>
+
+      <div style="display: flex; flex-direction: column; gap: 20px; position: relative; padding-left: 28px;">
+        
+        <!-- Connecting Vertical Line -->
+        <div style="position: absolute; left: 9px; top: 8px; bottom: 8px; width: 2px; background: #E7E5E4; z-index: 1;"></div>
+        <!-- Active Progress Line -->
+        <div style="position: absolute; left: 9px; top: 8px; height: 50%; width: 2px; background: #3C2A21; z-index: 2;"></div>
+
+        <!-- Step 1: Received -->
+        <div style="position: relative; z-index: 3; display: flex; flex-direction: column; gap: 2px;">
+          <div style="position: absolute; left: -28px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #3C2A21; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 800;">✓</div>
+          <h4 style="font-size: 13px; font-weight: 800; color: #1C1917; margin: 0;">Order Received</h4>
+          <p style="font-size: 11px; color: #78716C; margin: 0;">Sent to kitchen staff</p>
+        </div>
+
+        <!-- Step 2: Preparing -->
+        <div style="position: relative; z-index: 3; display: flex; flex-direction: column; gap: 2px;">
+          <div style="position: absolute; left: -28px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #D4A373; border: 3px solid #FFFFFF; display: flex; align-items: center; justify-content: center; color: white;"></div>
+          <h4 style="font-size: 13px; font-weight: 800; color: #3C2A21; margin: 0;">Preparing in Kitchen</h4>
+          <p style="font-size: 11px; color: #78716C; margin: 0;">Chef is working on your food</p>
+        </div>
+
+        <!-- Step 3: Serving -->
+        <div style="position: relative; z-index: 3; display: flex; flex-direction: column; gap: 2px; opacity: 0.5;">
+          <div style="position: absolute; left: -28px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: #E7E5E4; border: 3px solid #FFFFFF;"></div>
+          <h4 style="font-size: 13px; font-weight: 700; color: #1C1917; margin: 0;">On its Way</h4>
+          <p style="font-size: 11px; color: #78716C; margin: 0;">Being brought to Table 12</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Service Assistance Banner -->
+    <section style="background: #F3ECE2; border-radius: 18px; padding: 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(60, 42, 33, 0.05);">
+      <div>
+        <h4 style="font-size: 13px; font-weight: 800; color: #3C2A21; margin: 0;">Need something else?</h4>
+        <p style="font-size: 11px; color: #78716C; margin: 2px 0 0 0;">Call a waiter or request water directly</p>
+      </div>
+      <button onclick="callWaiter()" class="btn-active" style="background: #3C2A21; color: white; border: none; padding: 10px 14px; border-radius: 12px; font-size: 11px; font-weight: 700; cursor: pointer;">Call Waiter</button>
+    </section>
+
+  </main>
+
+  <!-- Bottom Nav Bar -->
+  <nav style="position: fixed; bottom: 0; left: 0; right: 0; background: #FFFFFF; border-top: 1px solid rgba(60, 42, 33, 0.08); height: 60px; display: flex; justify-content: space-around; align-items: center; z-index: 1000; padding: 0 8px;">
+    <a href="customer.html" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #78716C; font-size: 10px; font-weight: 600;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      <span style="margin-top: 2px;">Home</span>
+    </a>
+    <a href="customer.html" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #78716C; font-size: 10px; font-weight: 600;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      <span style="margin-top: 2px;">Menu</span>
+    </a>
+    <a href="cart.html" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #78716C; font-size: 10px; font-weight: 600;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      <span style="margin-top: 2px;">Orders</span>
+    </a>
+    <a href="tracking.html" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #3C2A21; font-size: 10px; font-weight: 700;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      <span style="margin-top: 2px;">Track</span>
+    </a>
+  </nav>
+
+  <script src="script.js"></script>
+  <script>
+    function callWaiter() {
+      if (window.TownCafe && typeof window.TownCafe.requestService === 'function') {
+        window.TownCafe.requestService('Waiter');
+      } else {
+        alert("🛎️ Waiter requested for Table 12!");
+      }
+    }
+  </script>
+</body>
+</html>

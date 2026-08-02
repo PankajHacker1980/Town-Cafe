@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Town Coffee — Cafe & Bistro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #FAF7F2;
+      color: #1C1917;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding-bottom: 140px;
+      margin: 0;
+    }
+    /* Hide scrollbars for clean carousel UX */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .active-toggle {
+      transform: translateX(16px) !important;
+    }
+    .btn-active:active {
+      transform: scale(0.92);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header style="padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; background: #FAF7F2; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(60, 42, 33, 0.05);">
+    <button onclick="requestService('Waiter')" class="btn-active" style="background: none; border: none; cursor: pointer; padding: 4px;" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1C1917" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3C2A21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+        <line x1="6" y1="1" x2="6" y2="4"></line>
+        <line x1="10" y1="1" x2="10" y2="4"></line>
+        <line x1="14" y1="1" x2="14" y2="4"></line>
+      </svg>
+      <div style="text-align: center;">
+        <h1 style="font-size: 17px; font-weight: 800; color: #1C1917; margin: 0; line-height: 1.1;">Town Coffee</h1>
+        <p style="font-size: 10px; font-weight: 700; color: #D4A373; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">Cafe & Bistro</p>
+      </div>
+    </div>
+
+    <a href="cart.html" style="position: relative; text-decoration: none; display: flex; align-items: center;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1C1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      <span class="cart-badge-count" style="position: absolute; top: -6px; right: -8px; background: #3C2A21; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center;">0</span>
+    </a>
+  </header>
+
+  <!-- Dynamic Table Welcome Banner -->
+  <section style="padding: 0 16px; margin-top: 12px;">
+    <div style="background: linear-gradient(135deg, #2D1E18 0%, #17110E 100%); border-radius: 24px; padding: 24px; color: white; position: relative; overflow: hidden; box-shadow: 0 12px 28px rgba(45, 30, 24, 0.2);">
+      <div style="position: relative; z-index: 2; max-width: 58%;">
+        <p style="font-size: 13px; color: #D4A373; font-weight: 500; margin: 0;">Welcome,</p>
+        <h2 style="font-size: 26px; font-weight: 800; color: #FFFFFF; margin: 2px 0 6px 0;">Table <span id="display-table-no">12</span></h2>
+        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.75); font-weight: 400; margin: 0;">Good food, great mood!</p>
+        <div style="width: 32px; height: 2px; background: #D4A373; margin-top: 14px; border-radius: 2px;"></div>
+      </div>
+      <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80" 
+           onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=500&q=80';"
+           alt="Town Coffee Cup" 
+           style="position: absolute; right: -15px; top: -15px; width: 180px; height: 180px; object-fit: cover; border-radius: 50%;">
+    </div>
+  </section>
+
+  <!-- Search & Filter Bar -->
+  <section style="padding: 0 16px; margin-top: 16px; display: flex; gap: 10px; align-items: center;">
+    <div style="flex-grow: 1; position: relative; display: flex; align-items: center;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#78716C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 16px;">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="menu-search" placeholder="Search for food or drinks..." oninput="applyFilters()" style="width: 100%; padding: 14px 16px 14px 44px; border-radius: 18px; border: 1px solid rgba(60, 42, 33, 0.08); background: #FFFFFF; color: #1C1917; font-size: 13px; outline: none; font-weight: 500;">
+    </div>
+    <button onclick="clearSearch()" class="btn-active" style="background: #FFFFFF; border: 1px solid rgba(60, 42, 33, 0.08); padding: 14px; border-radius: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3C2A21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </section>
+
+  <!-- Categories Carousel -->
+  <section style="padding: 16px 0 8px 0;">
+    <div class="no-scrollbar" style="display: flex; gap: 16px; overflow-x: auto; padding: 0 16px;">
+      
+      <div onclick="filterCategory('All', this)" class="cat-pill active" style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0;">
+        <div class="cat-icon-bg" style="width: 54px; height: 54px; border-radius: 50%; background: #3C2A21; color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(60, 42, 33, 0.2);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path></svg>
+        </div>
+        <span style="font-size: 11px; font-weight: 700; color: #1C1917;">All</span>
+      </div>
+
+      <div onclick="filterCategory('Coffee', this)" class="cat-pill" style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0;">
+        <div class="cat-icon-bg" style="width: 54px; height: 54px; border-radius: 50%; background: #F3ECE2; color: #3C2A21; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path></svg>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; color: #78716C;">Coffee</span>
+      </div>
+
+      <div onclick="filterCategory('Sandwiches', this)" class="cat-pill" style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0;">
+        <div class="cat-icon-bg" style="width: 54px; height: 54px; border-radius: 50%; background: #F3ECE2; color: #3C2A21; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6a6 6 0 0 0 0 12"></path></svg>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; color: #78716C;">Sandwiches</span>
+      </div>
+
+      <div onclick="filterCategory('Pasta', this)" class="cat-pill" style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0;">
+        <div class="cat-icon-bg" style="width: 54px; height: 54px; border-radius: 50%; background: #F3ECE2; color: #3C2A21; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 0-10 10h20a10 10 0 0 0-10-10z"></path><path d="M2 12h20v2a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4v-2z"></path></svg>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; color: #78716C;">Pasta</span>
+      </div>
+
+      <div onclick="filterCategory('Main', this)" class="cat-pill" style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0;">
+        <div class="cat-icon-bg" style="width: 54px; height: 54px; border-radius: 50%; background: #F3ECE2; color: #3C2A21; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20"></path></svg>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; color: #78716C;">Main Course</span>
+      </div>
+
+      <div onclick="filterCategory('Desserts', this)" class="cat-pill" style="display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; flex-shrink: 0;">
+        <div class="cat-icon-bg" style="width: 54px; height: 54px; border-radius: 50%; background: #F3ECE2; color: #3C2A21; display: flex; align-items: center; justify-content: center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; color: #78716C;">Desserts</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Popular Picks Header -->
+  <section style="padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+    <h3 style="font-size: 18px; font-weight: 800; color: #1C1917; margin: 0;">Popular Picks ✨</h3>
+    
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span style="font-size: 12px; font-weight: 600; color: #1C1917;">Bestseller</span>
+      <label style="position: relative; display: inline-block; width: 38px; height: 22px; cursor: pointer;">
+        <input type="checkbox" id="bestseller-toggle" onchange="toggleBestsellers()" style="opacity: 0; width: 0; height: 0;">
+        <span id="toggle-bg" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #E7E5E4; transition: .3s; border-radius: 20px;"></span>
+        <span id="toggle-circle" style="position: absolute; content: ''; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%;"></span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Food Items Grid -->
+  <main style="padding: 0 16px;">
+    <div id="menu-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 14px;"></div>
+  </main>
+
+  <!-- Floating Cart Bar -->
+  <div id="floating-cart-bar" style="position: fixed; bottom: 70px; left: 12px; right: 12px; max-width: 440px; margin: 0 auto; z-index: 990; transition: all 0.3s ease;">
+    <div style="background: #FAF7F2; border: 1px solid rgba(60, 42, 33, 0.12); padding: 10px 14px; border-radius: 20px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15); display: flex; align-items: center; justify-content: space-between;">
+      
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="position: relative; background: #D4A373; border-radius: 14px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-badge-count" style="position: absolute; top: -4px; right: -4px; background: #3C2A21; color: white; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center;">0</span>
+        </div>
+
+        <div>
+          <h4 id="floating-cart-count-txt" class="floating-cart-items-txt" style="font-size: 13px; font-weight: 800; color: #1C1917; margin: 0;">0 Items</h4>
+          <p style="font-size: 10px; font-weight: 600; color: #78716C; margin: 2px 0 0 0;">⏱️ Est. Time: 15-20 min</p>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span id="floating-cart-total-txt" class="cart-total-display" style="font-size: 14px; font-weight: 800; color: #1C1917;">₹0</span>
+        <a href="cart.html" class="btn-active" style="background: #3C2A21; color: #FFFFFF; text-decoration: none; padding: 10px 14px; border-radius: 14px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+          View Cart &rarr;
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <nav style="position: fixed; bottom: 0; left: 0; right: 0; background: #FFFFFF; border-top: 1px solid rgba(60, 42, 33, 0.08); height: 60px; display: flex; justify-content: space-around; align-items: center; z-index: 1000; padding: 0 8px;">
+    <a href="customer.html" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #3C2A21; font-size: 10px; font-weight: 700;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      <span style="margin-top: 2px;">Home</span>
+    </a>
+    <a href="javascript:void(0)" onclick="window.scrollTo({top: 400, behavior: 'smooth'})" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #78716C; font-size: 10px; font-weight: 600;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      <span style="margin-top: 2px;">Menu</span>
+    </a>
+    <a href="cart.html" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #78716C; font-size: 10px; font-weight: 600;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      <span style="margin-top: 2px;">Orders</span>
+    </a>
+    <a href="tracking.html" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #78716C; font-size: 10px; font-weight: 600;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      <span style="margin-top: 2px;">Track</span>
+    </a>
+    <a href="javascript:void(0)" onclick="requestService('Assistance')" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #78716C; font-size: 10px; font-weight: 600;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+      <span style="margin-top: 2px;">More</span>
+    </a>
+  </nav>
+
+  <!-- Script setup & dynamic behavior -->
+  <script src="script.js"></script>
+
+  <script>
+    let activeCategory = 'All';
+    const fallbackImg = "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=500&q=80";
+
+    const defaultFallbackMenu = [
+      { id: '1', name: 'Hazelnut Latte', category: 'Coffee', price: 180, description: 'Rich espresso blended with velvety steamed milk and sweet hazelnut syrup.', image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', rating: 4.8, prepTime: '8 min', isBestseller: true, isVeg: true },
+      { id: '2', name: 'Cappuccino Premium', category: 'Coffee', price: 160, description: 'Classic double espresso topped with rich, thick layer of frothed warm milk foam.', image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', rating: 4.6, prepTime: '7 min', isBestseller: true, isVeg: true },
+      { id: '3', name: 'Grilled Cheese Sandwich', category: 'Sandwiches', price: 210, description: 'Melted cheddar and mozzarella stuffed inside toasted artisan sourdough bread.', image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80', rating: 4.7, prepTime: '12 min', isBestseller: true, isVeg: true },
+      { id: '4', name: 'Creamy Alfredo Pasta', category: 'Pasta', price: 280, description: 'Fettuccine tossed in rich garlic parmesan cream sauce served with garlic bread.', image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281288?auto=format&fit=crop&w=500&q=80', rating: 4.9, prepTime: '15 min', isBestseller: false, isVeg: true },
+      { id: '5', name: 'Tiramisu Slice', category: 'Desserts', price: 220, description: 'Classic Italian dessert layer cake soaked in espresso with mascarpone cream.', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=500&q=80', rating: 4.9, prepTime: '5 min', isBestseller: true, isVeg: true }
+    ];
+
+    // Self-contained state storage so state updates dynamically without breaking
+    function getCartData() {
+      try {
+        return JSON.parse(localStorage.getItem('town_cafe_cart') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCartData(cart) {
+      localStorage.setItem('town_cafe_cart', JSON.stringify(cart));
+      updateUIHeaderAndCartBar();
+    }
+
+    function getFavoritesData() {
+      try {
+        return JSON.parse(localStorage.getItem('town_cafe_favs') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveFavoritesData(favs) {
+      localStorage.setItem('town_cafe_favs', JSON.stringify(favs));
+    }
+
+    function fetchMenuData() {
+      if (window.TownCafe && typeof window.TownCafe.getMenu === 'function') {
+        const m = window.TownCafe.getMenu();
+        if (m && m.length > 0) return m;
+      }
+      return defaultFallbackMenu;
+    }
+
+    // Direct Handler: Add To Cart
+    function handleAddToCart(productId) {
+      if (window.TownCafe && typeof window.TownCafe.addToCart === 'function') {
+        window.TownCafe.addToCart(productId);
+        updateUIHeaderAndCartBar();
+        return;
+      }
+
+      // Local fallback logic
+      const menu = fetchMenuData();
+      const item = menu.find(i => String(i.id) === String(productId));
+      if (!item) return;
+
+      const cart = getCartData();
+      const existing = cart.find(c => String(c.id) === String(productId));
+
+      if (existing) {
+        existing.quantity = (existing.quantity || 1) + 1;
+      } else {
+        cart.push({ ...item, quantity: 1 });
+      }
+
+      saveCartData(cart);
+    }
+
+    // Direct Handler: Favorite Toggle
+    function handleToggleFav(productId, btnElem) {
+      let isFav = false;
+
+      if (window.TownCafe && typeof window.TownCafe.toggleFavorite === 'function') {
+        isFav = window.TownCafe.toggleFavorite(productId);
+      } else {
+        let favs = getFavoritesData();
+        const idStr = String(productId);
+        if (favs.includes(idStr)) {
+          favs = favs.filter(id => id !== idStr);
+          isFav = false;
+        } else {
+          favs.push(idStr);
+          isFav = true;
+        }
+        saveFavoritesData(favs);
+      }
+
+      const svg = btnElem.querySelector('svg');
+      if (svg) {
+        svg.setAttribute('fill', isFav ? '#EF4444' : 'none');
+        svg.setAttribute('stroke', isFav ? '#EF4444' : '#1C1917');
+      }
+    }
+
+    function requestService(type) {
+      if (window.TownCafe && typeof window.TownCafe.requestService === 'function') {
+        window.TownCafe.requestService(type);
+      } else {
+        alert(`${type} service has been requested for Table 12!`);
+      }
+    }
+
+    function updateUIHeaderAndCartBar() {
+      let cart = [];
+      if (window.TownCafe && typeof window.TownCafe.getCart === 'function') {
+        cart = window.TownCafe.getCart();
+      } else {
+        cart = getCartData();
+      }
+
+      const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      const totalPrice = cart.reduce((sum, item) => sum + (Number(item.price || 0) * (item.quantity || 1)), 0);
+
+      document.querySelectorAll('.cart-badge-count').forEach(badge => {
+        badge.innerText = totalItems;
+      });
+
+      const countTxt = document.getElementById('floating-cart-count-txt');
+      if (countTxt) countTxt.innerText = `${totalItems} ${totalItems === 1 ? 'Item' : 'Items'}`;
+
+      const totalTxt = document.getElementById('floating-cart-total-txt');
+      if (totalTxt) totalTxt.innerText = `₹${totalPrice.toFixed(0)}`;
+    }
+
+    function renderFoodCards(items) {
+      const container = document.getElementById('menu-grid');
+      let favorites = [];
+      
+      if (window.TownCafe && typeof window.TownCafe.getFavorites === 'function') {
+        favorites = window.TownCafe.getFavorites();
+      } else {
+        favorites = getFavoritesData();
+      }
+      
+      if (!items || items.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px 10px;">
+            <p style="font-size: 14px; color: #78716C; font-weight: 600;">No delicious items match your filter!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = items.map(item => {
+        const isLiked = favorites.map(String).includes(String(item.id));
+        const safePrice = Number(item.price || 0).toFixed(0);
+        
+        return `
+        <div style="background: #FFFFFF; border-radius: 20px; overflow: hidden; border: 1px solid rgba(60, 42, 33, 0.06); display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 16px rgba(0,0,0,0.03);">
+          
+          <div style="position: relative; background: #EFE8DE;">
+            <img src="${item.image}" 
+                 onerror="this.onerror=null; this.src='${fallbackImg}';"
+                 alt="${item.name}" 
+                 style="width: 100%; height: 130px; object-fit: cover; display: block;">
+            
+            ${item.isBestseller ? `
+              <span style="position: absolute; top: 10px; left: 10px; background: #D4A373; color: white; padding: 3px 8px; border-radius: 8px; font-size: 9px; font-weight: 700;">Bestseller</span>
+            ` : item.isVeg ? `
+              <span style="position: absolute; top: 10px; left: 10px; background: white; border: 1px solid #16A34A; width: 14px; height: 14px; border-radius: 3px; display: flex; align-items: center; justify-content: center;">
+                <span style="width: 6px; height: 6px; background: #16A34A; border-radius: 50%;"></span>
+              </span>
+            ` : ''}
+
+            <button onclick="handleToggleFav('${item.id}', this)" class="btn-active" style="position: absolute; top: 10px; right: 10px; background: rgba(255, 255, 255, 0.9); border: none; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="${isLiked ? '#EF4444' : 'none'}" stroke="${isLiked ? '#EF4444' : '#1C1917'}" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div style="padding: 12px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h4 style="font-size: 14px; font-weight: 700; color: #1C1917; margin: 0;">${item.name}</h4>
+              <p style="font-size: 11px; color: #78716C; margin: 4px 0 8px 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${item.description}</p>
+            </div>
+
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                <span style="font-size: 11px; font-weight: 700; color: #1C1917; display: flex; align-items: center; gap: 2px;">
+                  <span style="color: #EAB308;">★</span> ${item.rating || 4.5}
+                </span>
+                <span style="font-size: 11px; color: #78716C;">⏱️ ${item.prepTime || '10 min'}</span>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 15px; font-weight: 800; color: #1C1917;">₹${safePrice}</span>
+                <button onclick="handleAddToCart('${item.id}')" class="btn-active" style="background: #3C2A21; color: white; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                  +
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      `;
+      }).join('');
+    }
+
+    function filterCategory(category, element) {
+      activeCategory = category;
+      document.querySelectorAll('.cat-pill').forEach(el => {
+        el.querySelector('.cat-icon-bg').style.background = '#F3ECE2';
+        el.querySelector('.cat-icon-bg').style.color = '#3C2A21';
+        el.querySelector('span').style.color = '#78716C';
+        el.querySelector('span').style.fontWeight = '600';
+      });
+
+      element.querySelector('.cat-icon-bg').style.background = '#3C2A21';
+      element.querySelector('.cat-icon-bg').style.color = '#FFFFFF';
+      element.querySelector('span').style.color = '#1C1917';
+      element.querySelector('span').style.fontWeight = '700';
+
+      applyFilters();
+    }
+
+    function toggleBestsellers() {
+      const checkbox = document.getElementById('bestseller-toggle');
+      const bg = document.getElementById('toggle-bg');
+      const circle = document.getElementById('toggle-circle');
+      
+      if (checkbox.checked) {
+        bg.style.backgroundColor = '#3C2A21';
+        circle.classList.add('active-toggle');
+      } else {
+        bg.style.backgroundColor = '#E7E5E4';
+        circle.classList.remove('active-toggle');
+      }
+      applyFilters();
+    }
+
+    function clearSearch() {
+      document.getElementById('menu-search').value = '';
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const menu = fetchMenuData();
+      const searchVal = (document.getElementById('menu-search').value || '').toLowerCase();
+      const onlyBestsellers = document.getElementById('bestseller-toggle').checked;
+
+      const filtered = menu.filter(item => {
+        const matchesCategory = (activeCategory === 'All') || item.category.toLowerCase().includes(activeCategory.toLowerCase());
+        const matchesSearch = item.name.toLowerCase().includes(searchVal) || item.description.toLowerCase().includes(searchVal);
+        const matchesBestseller = !onlyBestsellers || item.isBestseller;
+        return matchesCategory && matchesSearch && matchesBestseller;
+      });
+
+      renderFoodCards(filtered);
+    }
+
+    // Startup Initialization
+    window.addEventListener('load', () => {
+      applyFilters();
+      updateUIHeaderAndCartBar();
+    });
+    
+    // Safety fallback init
+    setTimeout(() => {
+      applyFilters();
+      updateUIHeaderAndCartBar();
+    }, 150);
+  </script>
+</body>
+</html>
